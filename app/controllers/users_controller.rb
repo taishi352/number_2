@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+
+    before_action :authenticate_user!
 	def new
 		@user = User.new
     end
@@ -12,6 +14,11 @@ class UsersController < ApplicationController
 
     end
     def show
+    end
+    def update
+        @user = User.find(params[:id])
+        @user.update(user_params)
+        redirect_to user_path(@user.id)
     end
 
     private

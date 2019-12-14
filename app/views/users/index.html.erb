@@ -18,10 +18,18 @@
     </nav>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-          <li><a class="glyphicon glyphicon-home home" href="/users/9814"> Home</a></li>
-          <li><a class="glyphicon glyphicon-user users" href="/users"> Users</a></li>
-          <li><a class="glyphicon glyphicon-book books" href="/books"> Books</a></li>
-          <li><a class="glyphicon glyphicon-log-out logout" rel="nofollow" data-method="delete" href="/users/sign_out"> logout</a></li>
+          <li>
+            <%= link_to "Home", users_path %>
+          </li>
+          <li>
+            <%= link_to "Users", "#" %>
+          </li>
+          <li>
+            <%= link_to "Books", "#" %>
+          </li>
+          <li>
+            <%= link_to "logout", destroy_user_session_path, method: :delete %>
+          </li>
       </ul>
     </nav>
   </div>
@@ -38,14 +46,14 @@
   <div class='col-xs-3'>
     <h2>User info</h2>
     <table class='table'>
-      <tr><img class="attachment user profile_image" src="/attachments/9bf1dd6d738ce858bc5270ffb54c7c11b830321f/store/fill/100/100/05c8a04fdcd571d14f8bcda6ab316f5da0dbc739a68ccd63025d39eb911a/profile_image" alt="Profile image" /></tr> 
+      <tr><%= attachment_image_tag @user, :profile_image, format: 'jpeg',fallback: "no_image.jpg", size: "100x100" %></tr> 
       <tr>
     	  <th>name</th>
-    	  <th>taishi352</th>
+    	  <th><%= @user %></th>
       </tr>
       <tr>
     	  <th>introduction</th>
-    	  <th>Hello!</th>
+    	  <th><%= @user %></th>
       </tr>
     </table>
     <%= link_to "プロフィール編集", new_user_path %>
