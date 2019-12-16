@@ -22,10 +22,10 @@
             <%= link_to "Home", users_path %>
           </li>
           <li>
-            <%= link_to "Users", "#" %>
+            <%= link_to "Users", users_path %>
           </li>
           <li>
-            <%= link_to "Books", "#" %>
+            <%= link_to "Books", books_path %>
           </li>
           <li>
             <%= link_to "logout", destroy_user_session_path, method: :delete %>
@@ -49,61 +49,68 @@
       <tr><%= attachment_image_tag @user, :profile_image, format: 'jpeg',fallback: "no_image.jpg", size: "100x100" %></tr> 
       <tr>
     	  <th>name</th>
-    	  <th><%= @user %></th>
+    	  <th><%= @user.name %></th>
       </tr>
       <tr>
     	  <th>introduction</th>
-    	  <th><%= @user %></th>
+    	  <th><%= @user.introduction %></th>
       </tr>
     </table>
-    <%= link_to "プロフィール編集", new_user_path %>
+
+        <p><%= link_to "プロフィール編集", edit_user_path(@user), class: "pull-right" %></p>
 
 <div class='row'>
   <a class="col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_9814" href="/users/9814/edit"></a>
 </div>
 
     <h2>New book</h2>
-    <form class="new_book" id="new_book" action="/books" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="g5DOeCtND6HL0f1ICoKeFuazd4W2FnNSgGcqLUs/aR1ZySWpLPYhig8hzekCvCZr5f39o8l4MVcKx0D5VDu3qg==" />
-  <div class="field row">
-    <label for="book_title">Title</label>
-    <input class="col-xs-12 book_title" type="text" name="book[title]" id="book_title" />
-  </div>
 
-  <div class="field row">
-    <label for="book_opinion">Opinion</label>
-    <textarea class="col-xs-12 book_body" name="book[body]" id="book_body">
-</textarea>
-  </div>
+    <%= form_for(@book) do |f| %>
 
-  <div class="actions row">
-    <input type="submit" name="commit" value="Create Book" class="btn btn-primary col-xs-12" data-disable-with="Create Book" />
-  </div>
-</form>
+      <% if @book.errors.any? %>
+        <h4>Errors:</h4>
+        <ul>
+          <% @book.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
 
-  </div>
+      <h4>Title</h4>
+      <%= f.text_field :title %>
+
+      <h4>Body</h4>
+      <%= f.text_area :body %>
+
+      <%= f.submit 'Create Book' %>
+
+    <% end %>
 
   <div class='col-xs-9'>
-    <h2>Books</h2>
+    <h2>Users</h2>
 
     <table class='table table-hover table-inverse'>
   <thead>
     <tr> 
       <th></th>
-      <th>Title</th>
-      <th>Opinion</th>
-      <th colspan="3"></th>
+      <th>image</th>
+      <th>name</th>
+      <th></th>
     </tr>
   </thead>
 
+  <% @users.each do |user| %>
+
   <tbody>
       <tr>
-        <td><a href="/users/9814">
-          <img class="attachment user profile_image" src="/attachments/2ed7c4c6b203429ce5675039a44992f08b29efb0/store/fill/50/50/05c8a04fdcd571d14f8bcda6ab316f5da0dbc739a68ccd63025d39eb911a/profile_image" alt="Profile image" />
-</a>        </td>
-        <td><a class="book_16040" href="/books/16040">aaaaaa</a></td>
-        <td>bbbbbbbbbb</td>
+        <td><%= attachment_image_tag @user, :profile_image, format: 'jpeg',fallback: "no_image.jpg", size: "60x60" %></td>
+        <td><%= @user.name %></td>
+        <td><%= @user.introduction %></td>
       </tr>
   </tbody>
+
+  <% end %>
+
 </table>
   </div>
 </div>
